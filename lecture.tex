@@ -1,0 +1,136 @@
+%%   $ sudo apt-get install texinfo
+%%   $ texi2pdf -c lecture.tex
+
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[pdf]{beamer}
+\mode<presentation>{\usetheme{Dresden}}
+\usepackage{lmodern}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,listings,array,color,amsthm}
+
+\usepackage{tikz}
+\usepackage{multicol}
+\usetikzlibrary{shapes,snakes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{fit}
+
+%% For on-slide alerting of nodes
+\tikzstyle{alert} = [text=black, fill=blue!20, draw=black]
+\setbeamercolor{alerted text}{fg=blue}
+\tikzset{alerton/.code args={<#1>}{%
+  \only<#1>{\pgfkeysalso{alert}} % \pgfkeysalso doesn't change the path
+}}
+
+%% utils for removing uninteresting sections from the navbar
+%% https://tex.stackexchange.com/questions/317774/hide-section-from-sidebar
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry%
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+%% preamble
+\title{NASA CARA}
+\subtitle{Air Traffic Control \emph{in Spaaaaaaaaace}}
+\author{A.C.}
+\date{\today}
+
+\AtBeginSection[]
+{
+  \miniframesoff
+  \begin{frame}{Outline}
+  \tableofcontents
+  \end{frame}
+  \miniframeson
+}
+
+\definecolor{darkred}{rgb}{0.7,0,0}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\definecolor{darkpurple}{rgb}{0.4, 0.0, 0.4}
+
+%% Code font settings
+\lstset{
+  showstringspaces=false,
+  basicstyle=\scriptsize\ttfamily,
+  commentstyle=\color{darkred},
+  stringstyle=\color{darkgreen},
+  keywordstyle=\bfseries\color{darkpurple},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start of Actual slides %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{CARA Mission}
+\subsection{Mission Statement}
+\begin{frame}{The CARA Mission}
+  % TODO: Define CARA, explain what it does organizationally and technically
+  % (technical discussion is summarized, obviously)
+\end{frame}
+
+\subsection{Consequence}
+\begin{frame}{Cost}
+  % TODO: go into the exorbitant cost of (some) satellites
+\end{frame}
+
+\begin{frame}{Kepler Syndrome}
+  % TODO: go into the self-replicating nature of space-junk.
+\end{frame}
+
+\subsection{Challenges}
+\begin{frame}{Non-Ideal Orbits}
+  % TODO: summary of causes for non-ideal orbits,
+  % drag, maneuver, tidal forces (mostly negligible, but hey, it's interesting).
+\end{frame}
+
+\begin{frame}{Drag}
+  % TODO: elaborate on the effects of drag on a LEO satellite.
+\end{frame}
+
+\begin{frame}{Maneuver}
+  % TODO: elaborate on the capabilities of satellites to maneuver
+\end{frame}
+
+\begin{frame}{Tidal Forces}
+  % TODO: elaborate on how tidal forces work. Acknowledge that this isn't
+  %   generally relevant (I assume).
+\end{frame}
+
+
+\section{Conjunction Identification}
+\subsection{Conjunction Identification}
+% TODO: explain how you *could* efficiently identify conjunctions from flight
+% curves. Or, if you can find a source explaining how it is actually done, do
+% that instead.
+
+
+% TODO: other subsections for other analyses?
+\section{Conjunction Analysis}
+\subsection{Probability of Collision}
+
+%% Q&A and Further reading.
+\miniframesoff
+\section*{}
+\begin{frame}{References and Additional Materials}
+  % TODO: add references
+  \begin{itemize}
+  \item The source for this presentation is hosted at
+    \url{https://github.com/alan-christopher/cara-edu}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Questions?}
+\end{frame}
+\end{document}

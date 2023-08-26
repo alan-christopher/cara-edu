@@ -1,0 +1,5 @@
+# emacs autosaves
+*~
+
+# Latex intermediate build artifacts
+auto/
