@@ -1,4 +1,5 @@
-%%   $ sudo apt-get install texinfo
+%% TODO: put together a proper Makefile. It's like one latexmk command to build and an `rm -f` to clean.
+%% $ sudo apt-get install texinfo
 %%   $ texi2pdf -c lecture.tex
 
 \PassOptionsToPackage{table}{xcolor}
@@ -74,63 +75,132 @@
 \end{frame}
 
 \section{CARA Mission}
-\subsection{Mission Statement}
-\begin{frame}{The CARA Mission}
-  % TODO: Define CARA, explain what it does organizationally and technically
-  % (technical discussion is summarized, obviously)
+\subsection{Purpose}
+\begin{frame}{CARA in Theory}
+  Mission Statement:
+  \begin{quote}
+    To take prudent measures, at reasonable cost, to enhance safety of flight,
+    without placing an undue burden on mission operations
+  \end{quote}
 \end{frame}
 
-\subsection{Consequence}
-\begin{frame}{Cost}
-  % TODO: go into the exorbitant cost of (some) satellites
+\begin{frame}{CARA in Practice}
+  Inputs:
+  \begin{itemize}
+  \item Ephemeris data from cooperating missions.
+  \item Catalog of tracked earth-orbiting objects from Combined Space Operations Center (CSpOC).
+  \end{itemize}
+
+  Outputs:
+  \begin{itemize}
+  \item Alerts to protected missions on high interest events (HIEs).
+  \item Advisories for protected missions on risk mitigatiions for HIEs.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Kepler Syndrome}
-  % TODO: go into the self-replicating nature of space-junk.
+\subsection{Complexity}
+\begin{frame}{Kepler Orbits}
+  \[ \ddot{R} = \ddot{R}_\text{2B} = \frac{Gm_\text{other}{||R||^3}R\]
+
+  \begin{itemize}
+  \item Solution known since Kepler and Newton.
+    \begin{itemize}
+    \item Must be a conic section.
+    \item If closed, then ellipse.
+    \end{itemize}
+  \item A star holds its course and its aim\ldots returns and returns\ldots and is always the same
+    \begin{itemize}
+    \item \textit{Mais non}
+    \end{itemize}
 \end{frame}
 
-\subsection{Challenges}
-\begin{frame}{Non-Ideal Orbits}
-  % TODO: summary of causes for non-ideal orbits,
-  % drag, maneuver, tidal forces (mostly negligible, but hey, it's interesting).
+\begin{frame}{Perturbation: Third Bodies}
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM}\]
+
+  \begin{itemize}
+  \item Gravity is a universal force.
+  \item Lots of non-earth mass out there
+    \begin{itemize}
+    \item Luna
+    \item Sol
+    \item Uncounted others (fortunately negligible)
+    \end{itemize}
+  \item Particularly relevant for higher-altitude orbits.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Drag}
+\begin{frame}{Perturbation: Non-Sphericity}
+  % TODO: elaborate on non-sphericity of earth, and therefore more complicated geopotential
+  % TODO: separate frame for shell theorem?
+\end{frame}
+
+\begin{frame}{Perturbation: Indirect Oblation}
+  % TODO: elaborate on acceleration of earth and therefore of reference frame.
+\end{frame}
+
+\begin{frame}{Perturbation: Drag}
   % TODO: elaborate on the effects of drag on a LEO satellite.
 \end{frame}
 
-\begin{frame}{Maneuver}
+\begin{frame}{Perturbation: Solar Radiation}
+  % TODO: elaborate on the effects of SRP on a HEO satellite.
+\end{frame}
+
+\begin{frame}{Perturbation: Thrust}
   % TODO: elaborate on the capabilities of satellites to maneuver
 \end{frame}
 
-\begin{frame}{Tidal Forces}
-  % TODO: elaborate on how tidal forces work. Acknowledge that this isn't
-  %   generally relevant (I assume).
+\subsection{Consequence}
+
+\begin{frame}{Mission Safety}
+  % TODO: back of the envelope risk calculation for satellite cost.
+  % TODO: make a caveat that 85% of conjunctions aren't currently accounted for.
 \end{frame}
 
+\begin{frame}{Kessler Syndrome}
+  % TODO: go into the self-replicating nature of space-junk.
+\end{frame}
 
 \section{Conjunction Identification}
-\subsection{Conjunction Identification}
-% TODO: explain how you *could* efficiently identify conjunctions from flight
-% curves. Or, if you can find a source explaining how it is actually done, do
-% that instead.
+\subsection{Volumetric Screening}
+% TODO: CARA's volumetric screening process.
 
-
-% TODO: other subsections for other analyses?
 \section{Conjunction Analysis}
-\subsection{Probability of Collision}
+\subsection{Risk Measures}
+
+\begin{frame}{Standoff Distance}
+  % TODO: summary of standoff distance as a measure of risk of collsion
+\end{frame}
+
+\begin{frame}{Probability of Collision}
+  % TODO: summary of P_c as a measure of risk of collsion. Make sure to mention "probability dilution".
+\end{frame}
+
+\begin{frame}{Severity Estimation}
+  % TODO: something about estimating the amount of new space trash (collision consequence).
+\end{frame}
+
+\subsection{2D $P_C$}
+% TODO: describe the 2D P_C algorithm
+
+\subsection{3D $P_C$}
+% TODO: describe 3D P_C algorithm
+
+\subsection{Monte Carlo}
+% TODO: describe from-epoch and from-TCA monte carlo methods.
 
 %% Q&A and Further reading.
 \miniframesoff
 \section*{}
-\begin{frame}{References and Additional Materials}
-  % TODO: add references
+\begin{frame}{References}[allowframebreaks]
+    \tiny
+    \printbibliography
+\end{frame}
+
+\begin{frame}{Self Link}
   \begin{itemize}
   \item The source for this presentation is hosted at
     \url{https://github.com/alan-christopher/cara-edu}.
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Questions?}
 \end{frame}
 \end{document}
