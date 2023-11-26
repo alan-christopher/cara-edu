@@ -130,23 +130,42 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Non-Sphericity}
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS} \]
   % TODO: elaborate on non-sphericity of earth, and therefore more complicated geopotential
   % TODO: separate frame for shell theorem?
 \end{frame}
 
 \begin{frame}{Perturbation: Indirect Oblation}
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO}\]
   % TODO: elaborate on acceleration of earth and therefore of reference frame.
 \end{frame}
 
 \begin{frame}{Perturbation: Drag}
-  % TODO: elaborate on the effects of drag on a LEO satellite.
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} \]
+
+  \begin{itemize}
+  \item Drag equation: $F_\text{D} = \frac{1}{2}\rho v^2 C_\text{D} A$
+  \item Scales by
+    \begin{itemize}
+    \item Object shape and orientation ($C_\text{D}, A$).
+    \item Square of object velocity $v^2$.
+    \item Atmospheric density $rho$, drops ~exponentially with altitude.
+    \end{itemize}
+  \item LEO objects (altitude < 2000 km) are low and fast
+    \begin{itemize}
+    \item experience non-negligible drag
+    \end{itemize}
+  \item Bonus: non-periodic and non-conservative.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Perturbation: Solar Radiation}
+\begin{frame}{Perturbation: Solar Radiation Pressure}
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP}\]
   % TODO: elaborate on the effects of SRP on a HEO satellite.
 \end{frame}
 
 \begin{frame}{Perturbation: Thrust}
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP} + \ddot{R}_\text{T} \]
   % TODO: elaborate on the capabilities of satellites to maneuver
 \end{frame}
 
