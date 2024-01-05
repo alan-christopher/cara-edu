@@ -88,7 +88,8 @@
   Inputs:
   \begin{itemize}
   \item Ephemeris data from cooperating missions.
-  \item Catalog of tracked earth-orbiting objects from Combined Space Operations Center (CSpOC).
+  \item Catalog of tracked earth-orbiting objects from Combined Space Operations
+    Center (CSpOC).
   \end{itemize}
 
   Outputs:
@@ -100,7 +101,7 @@
 
 \subsection{Complexity}
 \begin{frame}{Kepler Orbits}
-  \[ \ddot{R} = \ddot{R}_\text{2B} = \frac{Gm_\text{other}{||R||^3}R\]
+  \[ \ddot{R} = \ddot{R}_\text{2B} = \frac{Gm_\text{other}}{||R||^3}R \]
 
   \begin{itemize}
   \item Solution known since Kepler and Newton.
@@ -112,6 +113,7 @@
     \begin{itemize}
     \item \textit{Mais non}
     \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Perturbation: Third Bodies}
@@ -129,15 +131,34 @@
   \end{itemize}
 \end{frame}
 
+% TODO: add image (maybe whole frame)
 \begin{frame}{Perturbation: Non-Sphericity}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS} \]
-  % TODO: elaborate on non-sphericity of earth, and therefore more complicated geopotential
-  % TODO: separate frame for shell theorem?
+  \begin{itemize}
+  \item $\ddot{R}_\text{2B}$ uses point-mass equations
+    \begin{itemize}
+    \item Works for points
+    \item Works for spheres (shell theorem)
+    \end{itemize}
+  \item Earth is neither
+    \begin{itemize}
+    \item Structural rigidity
+    \item Centrifugal forces
+    \item Tidal forces
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Perturbation: Indirect Oblation}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO}\]
-  % TODO: elaborate on acceleration of earth and therefore of reference frame.
+  \begin{itemize}
+  \item Earth is not an inertial reference frame
+    \begin{itemize}
+    \item Has its own orbit around Sol
+    \item Yanked around by Luna inside that orbit
+    \end{itemize}
+  \item ``Shaky Camera'' effect
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Perturbation: Drag}
@@ -161,12 +182,54 @@
 
 \begin{frame}{Perturbation: Solar Radiation Pressure}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP}\]
-  % TODO: elaborate on the effects of SRP on a HEO satellite.
+
+  \begin{itemize}
+  \item $\gamma := \sqrt{\frac{c^2}{c^2 - v^2}}$
+  \item $ p = \gamma m v$
+  \item photons: $m\rightarrow0, \gamma \rightarrow \infty $
+    \begin{itemize}
+    \item $p \rightarrow ?$
+    \item God's math: $ p = \frac{h}{\lambda} $
+    \end{itemize}
+  \item Absorbing and emitting light imparts momentum
+    \begin{itemize}
+    \item Sunlight never stops: SRP
+    \item Most impactful on higher altitude orbits
+    \item Non-periodic and non-conservative
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Perturbation: Thrust}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP} + \ddot{R}_\text{T} \]
-  % TODO: elaborate on the capabilities of satellites to maneuver
+
+  \begin{itemize}
+  \item Orbital payloads commonly come equipped with maneuvering thrusters
+    \begin{itemize}
+    \item Chemical burns (fast, short)
+    \item Electric propulsion (slow, long)
+    \end{itemize}
+  \item Good news: allows for doing something about predicted collisions
+  \item Bad news: Non-periodic, non-conservative, AND non-physical(-ish)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Perturbation Impacts}
+  \begin{itemize}
+  \item Low-to-medium fidelity diff-eqs can be solved analytically
+    \begin{itemize}
+      \item E.g. Brouwer models, SGP4/SDP4
+    \end{itemize}
+  \item High-fidelity generally resort to numerical integration
+    \begin{itemize}
+      \item E.g. NORAD Special Perturbations (SP)
+    \end{itemize}
+  \item Low- and high-fidelity models can diverge significantly, rapidly
+    \begin{itemize}
+    \item By kilometers
+    \item Within a few orbital periods (i.e. hours)
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \subsection{Consequence}
@@ -213,7 +276,7 @@
 \section*{}
 \begin{frame}{References}[allowframebreaks]
     \tiny
-    \printbibliography
+%    \printbibliography
 \end{frame}
 
 \begin{frame}{Self Link}
