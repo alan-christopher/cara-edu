@@ -96,6 +96,9 @@
   \begin{itemize}
   \item Alerts to protected missions on high interest events (HIEs).
   \item Advisories for protected missions on risk mitigatiions for HIEs.
+    \begin{itemize}
+    \item Hopefully avoid more Kosmos-Iridium incidents.
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -235,12 +238,48 @@
 \subsection{Consequence}
 
 \begin{frame}{Mission Safety}
-  % TODO: back of the envelope risk calculation for satellite cost.
-  % TODO: make a caveat that 85% of conjunctions aren't currently accounted for.
+  \[ E(\text{Cost}(X)) = P(X) \cdot \text{Cost}(X) \]
+  
+  \begin{itemize}
+  \item Plausible $\text{Cost}(X)$: 100 million USD
+  \item Plausible $P(X)$: 2e-4
+  \item $E(\text{Cost}(X)) = 2 \cdot 10^{-4} \cdot 10^8 = 20000$ USD
+    \begin{itemize}
+    \item Might be worth mitigating
+    \item Although, $\sim 85\%$ of likely-lethal conjunctors aren't even
+      tracked \ldots
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Kessler Syndrome}
-  % TODO: go into the self-replicating nature of space-junk.
+\begin{frame}{Domain Safety I}
+
+  \begin{itemize}
+  \item Orbit contention is self-reinforcing
+    \begin{itemize}
+    \item More objects means more conjunctions
+    \item More conjunctions means more collisions
+    \item More collisions means more objects
+    \end{itemize}
+  \item Critical density $\rightarrow$ runaway, sustained fragmentation
+    \begin{itemize}
+    \item Kessler syndrome
+    \end{itemize}
+  \item Sub-critical density increases still increase hazard to ecosystem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Domain Safety II}
+  \begin{itemize}
+  \item Vested public interest in controlling flux
+  \item Must avoid collisions, especially between large objects
+    \begin{itemize}
+    \item Debris potential strongly linked to object size
+    \item Largest objects are best tracked
+    \item Objects follow a power-law distribution: many, many small pieces,
+      comparatively few large
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \section{Conjunction Identification}
