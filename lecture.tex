@@ -380,7 +380,7 @@
     \item Different collisions create different amounts of debris.
     \item EVOLVE: empirically determined model mapping relative masses and
       velocities to expected fragmentation count.
-    \item Basic rules: fast is bad, big is bad.
+    \item Basic rules: fast is bad, heavy is bad.
     \item Of course, ultimately dependent on O/Os to maneuver/mitigate.
     \end{itemize}
 
@@ -394,6 +394,82 @@
 \end{frame}
 
 \subsection{2D $P_C$}
+\begin{frame}{Naive $P_C$}
+
+  \[ \int\int f(S_1,S_2) \mathbb{I}(\text{collision} | S_1,S_2) dS_1 dS_2 \]
+
+  \begin{itemize}
+  \item That's a 12-dimensional integral.
+  \item $\mathbb{I}(\text{collision} | S_1,S_2)$ is a nightmare function.
+  \item Let's make some simplifying assumptions
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{2D $P_C$: Assumptions}
+  \begin{enumerate}
+  \item State position vectors $R_1 \sim \mathcal{N}(\bar{R_1}, \Sigma_1), R_2 \sim \mathcal{N}(\bar{R_2}, \Sigma_2)$
+  \item $R_1 \perp R_2$
+  \item Velocity uncertainty is negligible
+  \item Position uncertainty is stable throughout the encounter
+  \item Relative motion is linear throughout the encounter
+  \item Both objects are spheres
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{2D $P_C$}
+  Core idea: Don't think about two objects, think about
+  the distance separating them. More precisely, let
+  
+  \[ R_\Delta := R_2 - R_1 \]
+
+  We wish to integrate
+
+  \[ \int f_\Delta(R) \mathbb{I}(\text{collision} | R) dR \]
+\end{frame}
+
+\begin{frame}{2D $P_C$}
+
+  \[ \int \alert{f_\Delta(R)} \mathbb{I}(\text{collision} | R) dR \]
+
+  Recall: $R_1 \perp R_2$, both Gaussian. So
+
+  \[ R_\Delta \sim \mathcal{N}(\bar{R_2} - \bar{R_1}, \Sigma_2 - \Sigma_1) \]
+
+  $f_\Delta$ is just $\phi$!
+\end{frame}
+
+
+\begin{frame}{2D $P_C$}
+
+  \[ \int f_\Delta(R) \alert{\mathbb{I}(\text{collision} | R)} dR \]
+
+  Linear motion, spherical objects. Collision iff $\exists t \in \mathbb{R}$ s.t.
+
+  \[ ||R_\Delta + v_\Delta \cdot t|| < r \]
+
+  That's a cylinder!
+
+  % TODO: insert image here
+\end{frame}
+
+
+\begin{frame}{2D $P_C$}
+  Observe: cylinder is infinite. Rotate our $z$-axis to align with it, and it
+  will marginalize to 1.
+
+  % TODO: insert image here
+
+
+\end{frame}
+
+\begin{frame}{2D $P_C$}
+  A little final massaging and we arrive at a numerical-quadrature-friendly
+  integral.
+  
+  \[ P_C = \frac{1}{\sqrt{\det(2\pi C)}} \int\int_A \exp \left( -\frac{r^TC^{-1}r}{2}\right)dxdy \]
+\end{frame}
+
+
 % TODO: describe the 2D P_C algorithm
 
 \subsection{3D $P_C$}
