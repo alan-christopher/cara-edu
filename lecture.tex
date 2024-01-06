@@ -314,7 +314,7 @@
       \If{$s(t).\text{pos} \notin V$}
         \State \textbf{continue}
       \EndIf
-      \State $d(\tau) := || p(\tau).\text{pos}  - s(\tau).\text{pos} ||_2$
+      \State $d(\tau) := || p(\tau).\text{pos}  - s(\tau).\text{pos} ||$
       \If{$\text{sign}(d'(t)) = \text{sign}(d'(t+\Delta t))$}
         \State \textbf{continue}
       \EndIf
@@ -469,13 +469,127 @@
   \[ P_C = \frac{1}{\sqrt{\det(2\pi C)}} \int\int_A \exp \left( -\frac{r^TC^{-1}r}{2}\right)dxdy \]
 \end{frame}
 
-
-% TODO: describe the 2D P_C algorithm
-
 \subsection{3D $P_C$}
-% TODO: describe 3D P_C algorithm
+
+\begin{frame}{Hyperkinetic Assumptions}
+  \begin{itemize}
+  \item 2D $P_C$ treated conjunctors like a pair of bullets
+  \item Pretty good model when relative velocity is high, encounter is short
+  \item Not all close approaches occur at high (relative) velocity, though
+  \item Can we do better?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{3D $P_C$}
+  What happens if we trace our miss vector through the encounter?
+
+  \[ \int P(\text{conjunctors touching at }t) dt\]
+
+  That's actually $N_C$, the expected number of collisions, but close enough.
+\end{frame}
+
+
+\begin{frame}{3D $P_C$}
+  \[ P(\text{conjunctors touching at }t) = P(||R_\Delta(t)|| = r) \]
+
+  \begin{itemize}
+  \item The integrand is a surface integral over a sphere!
+    \begin{itemize}
+    \item Total integration dimension: 3
+    \item Curse of dimensionality remains weak
+    \end{itemize}
+  \item Can we compute and integrate $R_\Delta(t)$?
+    \begin{itemize}
+    \item Yes, with two-body equations of motion\ldots but the math is kind of
+      involved.
+    \item Please read the full pub if interested.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
 
 \subsection{Monte Carlo}
+
+\begin{frame}{Motivation}
+  \begin{itemize}
+  \item All this integration, it's making my head hurt.
+  \item Even the fancy 3D $P_C$ variant had to make simplifying assumptions.
+  \item This is a stochastic process, let's try modeling it stochastically.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{From-Epoch MC}
+  \begin{algorithmic}
+    \Procedure{FromEpochMC}{\textit{primOD}, \textit{secOD}, \textit{trials}}
+    \State $\textit{hits} \gets 0$
+    \For{$t \in [0,\ldots,\textit{trials})$}
+      \State $p \gets \text{draw from } \textit{primOD}$ 
+      \State $s \gets \text{draw from } \textit{secOD}$
+      \If{$p.\text{propagate()} \text{ collides with } s.\text{propagate()}$}
+        \State $\textit{hits} \gets \textit{hits} + 1$
+      \EndIf
+      \EndFor
+    \State \Return $\frac{\textit{hits}}{\textit{trials}}$
+    \EndProcedure  
+  \end{algorithmic}
+\end{frame}
+
+\begin{frame}{From-Epoch MC}
+  \begin{itemize}
+  \item No simplifying assumptions! Estimate is as good as
+    \begin{itemize}
+    \item Our orbit propagation algorithm
+    \item The number of trials we run
+    \end{itemize}
+  \item Heinously expensive, though
+    \begin{itemize}
+    \item Millions and millions of trials
+    \item Each trial doing high-fidelity numerical ODE solving from epoch up
+      through TCA
+    \end{itemize}
+  \item Most useful to prove out the accuracy of other algorithms.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{From-TCA MC}
+  \begin{algorithmic}
+    \Procedure{FromTCAMC}{\textit{primTCA}, \textit{secTCA}, \textit{trials}}
+    \State $\textit{hits} \gets 0$
+    \For{$t \in [0,\ldots,\textit{trials})$}
+      \State $p \gets \text{draw from } \textit{primTCA}$ 
+      \State $s \gets \text{draw from } \textit{secTCA}$
+      \If{$p.\text{propForward()} \text{ collides with } s.\text{propForward()}$}
+        \State $\textit{hits} \gets \textit{hits} + 1$
+      \ElsIf{$p.\text{propBack()} \text{ collides with } s.\text{propBack()}$}
+        \State $\textit{hits} \gets \textit{hits} + 1$
+      \EndIf
+      \EndFor
+    \State \Return $\frac{\textit{hits}}{\textit{trials}}$
+    \EndProcedure  
+  \end{algorithmic}
+\end{frame}
+
+\begin{frame}{From-TCA MC}
+  \begin{itemize}
+  \item Faster than From-Epoch
+    \begin{itemize}
+    \item Only need to propagate motion around the encounter
+    \item Shorter motion-prop window means lower fidelity propagation schemes
+      can be used.
+    \end{itemize}
+  \item Depends on assumptions about the shape of propagated uncertainty
+    \begin{itemize}
+    \item Not really a practical issue if we're careful to sample in curvilinear
+      coordinates.
+    \end{itemize}
+  \item Still much slower than analytic methods.
+    \begin{itemize}
+    \item Empirically not much better results
+    \item Not frequently used in CARA in practice
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
 % TODO: describe from-epoch and from-TCA monte carlo methods.
 
 %% Q&A and Further reading.
