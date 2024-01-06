@@ -8,6 +8,8 @@
 \usepackage{lmodern}
 \usepackage{amsmath,textcomp,amssymb,geometry,graphicx,listings,array,color,amsthm}
 
+\usepackage[noend]{algpseudocode}
+
 \usepackage{tikz}
 \usepackage{multicol}
 \usetikzlibrary{shapes,snakes}
@@ -284,21 +286,111 @@
 
 \section{Conjunction Identification}
 \subsection{Volumetric Screening}
-% TODO: CARA's volumetric screening process.
+
+\begin{frame}{Conjunction Screening}
+  \begin{itemize}
+  \item Before a conjunction can be analyzed it must be identified
+    \begin{itemize}
+    \item Want to know the time of closest approach (TCA)
+    \item and of course the conjunctors' states at TCA
+    \end{itemize}
+  \item Technically not a CARA responsibility
+    \begin{itemize}
+    \item Screening computed for CARA by CSpOC
+    \item Uses a method called Computation of Miss Between Orbits (COMBO)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{COMBO in Pictures}
+  % TODO: create a flying ellipsoid image-set.
+\end{frame}
+
+\begin{frame}{COMBO in Pseudocode}
+  \begin{algorithmic}
+    \Procedure{COMBO}{}
+    \For{$p, s, t \in \textit{Primaries} \times \textit{Secondaries} \times \textit{Time Slices}$}
+      \State $V \gets \text{ellipse around }p(t)$
+      \If{$s(t).\text{pos} \notin V$}
+        \State \textbf{continue}
+      \EndIf
+      \State $d(\tau) := || p(\tau).\text{pos}  - s(\tau).\text{pos} ||_2$
+      \If{$\text{sign}(d'(t)) = \text{sign}(d'(t+\Delta t))$}
+        \State \textbf{continue}
+      \EndIf
+      \State $t^* \gets \operatorname*{argmin}_{[t, t + \Delta t]} d$
+      \State $\text{Emit } (p, s, t^*)$
+    \EndFor
+    \EndProcedure  
+  \end{algorithmic}
+\end{frame}
 
 \section{Conjunction Analysis}
 \subsection{Risk Measures}
 
 \begin{frame}{Standoff Distance}
-  % TODO: summary of standoff distance as a measure of risk of collsion
+  \begin{itemize}
+  \item Most intuitive measure of safety
+    \begin{itemize}
+    \item If we are far apart, of course we aren't touching.
+    \item Implicitly part of volumetric screening regimes.
+    \end{itemize}
+
+  \item Difficult to map distance onto risk.
+    \begin{itemize}
+    \item How far apart is far? Meters? Kilometers?
+    \end{itemize}
+    
+  \item Cannot capture uncertainty
+    \begin{itemize}
+    \item What if our measurements of a satellite's state are known to be imprecise?
+    \end{itemize}
+    
+  \item Tendency toward conservatism
+    \begin{itemize}
+      \item sometimes desirable, e.g. around human space flight assets
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Probability of Collision}
-  % TODO: summary of P_c as a measure of risk of collsion. Make sure to mention "probability dilution".
+  \begin{itemize}
+  \item Most commonly used measure of safety.
+
+  \item Answers the challenges with standoff distance
+    \begin{itemize}
+    \item Maps naturally to risk.
+    \item Captures and describes uncertainty and imprecision.
+    \item Allows for mindfully tuned risk postures.
+    \end{itemize}
+
+  \item But! Can suffer from probability dilution.
+    \begin{itemize}
+    \item Space is big. Really big. Really, really big.
+    \item Rubbish measurements $\Rightarrow P_C \approx 0$.
+    \item Probability is ``diluted'' across space.
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Severity Estimation}
-  % TODO: something about estimating the amount of new space trash (collision consequence).
+  \begin{itemize}
+  \item For the domain:
+    \begin{itemize}
+    \item Different collisions create different amounts of debris.
+    \item EVOLVE: empirically determined model mapping relative masses and
+      velocities to expected fragmentation count.
+    \item Basic rules: fast is bad, big is bad.
+    \item Of course, ultimately dependent on O/Os to maneuver/mitigate.
+    \end{itemize}
+
+  \item For O/Os:
+    \begin{itemize}
+    \item Everything is moving too damned fast
+    \item Everything is too damned expensive
+    \item A hit is a hit is a hit is a bad time
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \subsection{2D $P_C$}
@@ -314,14 +406,14 @@
 \miniframesoff
 \section*{}
 \begin{frame}{References}[allowframebreaks]
-    \tiny
+  \tiny
+% TODO
 %    \printbibliography
 \end{frame}
 
 \begin{frame}{Self Link}
-  \begin{itemize}
-  \item The source for this presentation is hosted at
-    \url{https://github.com/alan-christopher/cara-edu}.
-  \end{itemize}
+  The source for this presentation is hosted at
+\url{https://github.com/alan-christopher/cara-edu}.
+
 \end{frame}
 \end{document}
