@@ -1,7 +1,3 @@
-%% TODO: put together a proper Makefile. It's like one latexmk command to build and an `rm -f` to clean.
-%% $ sudo apt-get install texinfo
-%%   $ texi2pdf -c lecture.tex
-
 \PassOptionsToPackage{table}{xcolor}
 \documentclass[pdf]{beamer}
 \mode<presentation>{\usetheme{Dresden}}
@@ -9,6 +5,12 @@
 \usepackage{amsmath,textcomp,amssymb,geometry,graphicx,listings,array,color,amsthm}
 
 \usepackage[noend]{algpseudocode}
+
+\usepackage[
+backend=biber,
+sorting=ynt,
+]{biblatex}
+\addbibresource{lecture.bib}
 
 \usepackage{tikz}
 \usepackage{multicol}
@@ -50,7 +52,7 @@
 {
   \miniframesoff
   \begin{frame}{Outline}
-  \tableofcontents
+    \tableofcontents[currentsection,hideothersubsections]
   \end{frame}
   \miniframeson
 }
@@ -98,7 +100,7 @@
   Outputs:
   \begin{itemize}
   \item Alerts to protected missions on high interest events (HIEs).
-  \item Advisories for protected missions on risk mitigatiions for HIEs.
+  \item Advisories for protected missions on risk mitigations for HIEs.
     \begin{itemize}
     \item Hopefully avoid more Kosmos-Iridium incidents.
     \end{itemize}
@@ -123,7 +125,7 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Third Bodies}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM}\]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \alert{\ddot{R}_\text{PM}}\]
 
   \begin{itemize}
   \item Gravity is a universal force.
@@ -138,7 +140,7 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Non-Sphericity}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS} \]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \alert{\ddot{R}_\text{NS}} \]
   \begin{itemize}
   \item $\ddot{R}_\text{2B}$ uses point-mass equations
     \begin{itemize}
@@ -157,34 +159,6 @@
   Gross exaggeration: cylindrical Earth
   
   \begin{center}
-    % \begin{tikzpicture}
-    %   \tikzmath{
-    %     \rP = 0.5;
-    %     \rPT = 0.7;
-    %     \rO = 1.5;
-    %     \rCG = 0.25;
-    %     \xCG = \rCG * cos 60;
-    %     \yCG = \rCG * sin 60;
-    %     \rDot = 0.015;
-    %   }
-    %   % satellite orbit
-    %   \draw[black, dashed] circle [x radius = \rO, y radius = \rO];
-    %   % satellite point mass
-    %   \filldraw[black, thick] (0, \rO) circle [x radius = \rDot, y radius = \rDot];
-      
-    %   % planet
-    %   \draw[black, thick, fill=gray] (15:\rP) arc (15:-255:\rP) -- (60:\rPT) -- (15:\rP);    
-    %   \filldraw[black, thick] (0, 0) circle [x radius = \rDot, y radius = \rDot];
-      
-    %   % motion vector
-    %   \draw[black, ->] (0,\rO) -- (1, \rO)
-    %   node[draw=none,fill=none,font=\scriptsize,midway,above] {$\dot{R}$};
-      
-    %   % center of gravity and force vector
-    %   \filldraw[blue, thick] (\xCG,\yCG) circle [x radius = \rDot, y radius = \rDot];
-    %   \draw[black, ->] (0,\rO) -- (\xCG, \yCG)
-    %   node[draw=none,fill=none,font=\scriptsize,midway,left] {$\ddot{R}$};
-    % \end{tikzpicture}
     \begin{tikzpicture}
       \tikzmath{
         \h = 0.5;
@@ -222,7 +196,7 @@
 
 
 \begin{frame}{Perturbation: Indirect Oblation}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO}\]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \alert{\ddot{R}_\text{IO}}\]
   \begin{itemize}
   \item Earth is not an inertial reference frame
     \begin{itemize}
@@ -234,7 +208,7 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Drag}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} \]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \alert{\ddot{R}_\text{D}} \]
 
   \begin{itemize}
   \item Drag equation: $F_\text{D} = \frac{1}{2}\rho v^2 C_\text{D} A$
@@ -253,7 +227,7 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Solar Radiation Pressure}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP}\]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \alert{\ddot{R}_\text{SRP}}\]
 
   \begin{itemize}
   \item $\gamma := \sqrt{\frac{c^2}{c^2 - v^2}}$
@@ -273,7 +247,7 @@
 \end{frame}
 
 \begin{frame}{Perturbation: Thrust}
-  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP} + \ddot{R}_\text{T} \]
+  \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO} + \ddot{R}_\text{D} + \ddot{R}_\text{SRP} + \alert{\ddot{R}_\text{T}} \]
 
   \begin{itemize}
   \item Orbital payloads commonly come equipped with maneuvering thrusters
@@ -466,28 +440,6 @@
   \end{itemize}
 \end{frame}
 
-% TODO: roll this into motivation section
-% TODO: Add a slide+subsection for MTS
-\begin{frame}{Severity Estimation}
-  \begin{itemize}
-  \item For the domain:
-    \begin{itemize}
-    \item Different collisions create different amounts of debris.
-    \item EVOLVE: empirically determined model mapping relative masses and
-      velocities to expected fragmentation count.
-    \item Basic rules: fast is bad, heavy is bad.
-    \item Of course, ultimately dependent on O/Os to maneuver/mitigate.
-    \end{itemize}
-
-  \item For O/Os:
-    \begin{itemize}
-    \item Everything is moving too damned fast
-    \item Everything is too damned expensive
-    \item A hit is a hit is a hit is a bad time
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
 \subsection{2D $P_C$}
 \begin{frame}{Naive $P_C$}
 
@@ -544,20 +496,84 @@
 
   That's a cylinder!
 
-  % TODO: insert image here
+  \begin{center}
+    \begin{tikzpicture}
+      \tikzmath{
+        \h = 0.5;
+        \w = 5;
+        \r = \h / 2;
+        \rDot = 0.02;
+      }
+
+      % \fill[fill=gray] (0, 0) rectangle (\w, \h);
+      % cylinder
+      \draw[black, thick] (0, 0) -- (\w, 0);
+      \draw[black, thick] (0, \h) -- (\w, \h);
+      \draw[black, thick] (0,0) arc (270:90:0.1 and \h / 2);
+      \draw[black, thick, dashed] (0,\h) arc (90:-90:0.1 and \h / 2);
+      \draw[black, thick] (\w,0) arc (270:90:0.1 and \h / 2);
+      \draw[black, thick] (\w,\h) arc (90:-90:0.1 and \h / 2);
+      % sphere
+      \coordinate (C) at (\w / 2, \h /2);
+      \draw[black, thick, fill=gray] (C) circle [x radius = \r, y radius = \r];
+      \draw[black, thick, shift=(C)] (-\r,0) arc (180:360:\r + 0 and \r / 2);
+      \draw[black, thick, dashed,shift=(C)] (\r,0) arc (0:180:\r + 0 and \r / 2);
+
+      \node (TPlus) at (1 + \w / 2, \h / 2 ) {$+t$};
+      \node (TMinus) at (-1 + \w / 2, \h / 2 ) {$-t$};
+
+      \draw[black, thick, ->] (C) -- (TPlus);
+      \draw[black, thick, ->] (C) -- (TMinus);
+      \node[circle,fill=black,inner sep=1pt,minimum size=\rDot] (CDot) at (C) {};
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 
 \begin{frame}{2D $P_C$}
-  Observe: cylinder is infinite. Rotate our $z$-axis to align with it, and it
-  will marginalize to 1.
+  Rotate coordinates to align cylinder with $z$-axis.
 
-  % TODO: insert image here
+  \begin{center}
+    \begin{tikzpicture}
+      \tikzmath{
+        \h = 0.5;
+        \w = 3;
+        \r = \h / 2;
+        \rDot = 0.02;
+      }
+      % cylinder
+      \fill[fill=gray,rotate=30] (0, 0) rectangle (\w, \h);
+      \draw[black, thick,fill=gray,rotate=30] (0, 0) -- (\w, 0);
+      \draw[black, thick,fill=gray,rotate=30] (0, \h) -- (\w, \h);
+      \draw[black, thick,fill=gray,rotate=30] (0,0) arc (270:90:0.1 and \h / 2);
+      \draw[black, thick,fill=gray,rotate=30] (0,\h) arc (90:-90:0.1 and \h / 2);
+      \draw[black, thick,fill=gray,rotate=30,dashed] (\w,0) arc (270:90:0.1 and \h / 2);
+      \draw[black, thick,fill=gray,rotate=30] (\w,\h) arc (90:-90:0.1 and \h / 2);
+      \draw[black, thick,rotate=30, ->] (0,\h / 2) -- (-0.35, \h / 2);
 
-  A little final massaging and we arrive at a numerical-quadrature-friendly
-  integral.
+      % circle
+      \coordinate (C) at (3, 0.25);
+      \draw[black, thick, fill=gray] (C) circle [radius = \h / 2];
+      \fill[fill=black] (C) circle [radius = \rDot];
+      \draw[black] (C) circle [radius = \rDot * 2];
+
+      % Rotation arrow
+      \draw[black, thick, dashed, ->] (0, 0) arc (180:360:1.5 and 0.75);
+
+    \end{tikzpicture}
+  \end{center}
+  
+  Cylinder is infinite: $z$-axis marginalizes to 1.
+\end{frame}
+
+\begin{frame}{2D $P_C$}
+
+  Integral form after massaging:
   
   \[ P_C = \frac{1}{\sqrt{\det(2\pi C)}} \int\int_A \exp \left( -\frac{r^TC^{-1}r}{2}\right)dxdy \]
+
+  Not fully analytic, but quite amenable to numerical quadrature.
+
 \end{frame}
 
 \subsection{3D $P_C$}
@@ -681,14 +697,69 @@
   \end{itemize}
 \end{frame}
 
+\section{Risk Remediation}
+\subsection{Maneuver Planning}
+
+\begin{frame}{HIE Response}
+
+  Two choices for dealing with an HIE.
+  
+  \begin{enumerate}
+  \item Change course
+    \begin{itemize}
+    \item Costs fuel/reaction mass.
+    \item Generally cheaper the earlier an orbit is modified.
+    \end{itemize}
+  \item Wait and see
+    \begin{itemize}
+    \item Most HIEs come to nothing
+    \item Can self-resolve ``early enough'' as conjunction nears and uncertainty
+      drops off.
+    \end{itemize}
+  \end{enumerate}
+
+  Common pattern: plan maneuver immediately in response to HIE, then abort if
+HIE resolves before the commit point.
+\end{frame}
+
+\begin{frame}{Maneuver Trade Space}
+  \begin{itemize}
+  \item Several knobs to turn when modifying trajectory
+    \begin{itemize}
+    \item Burn intensity
+    \item Burn timing
+    \item Satellite orientation (differential drag)
+    \end{itemize}
+  \item CARA maintains analysis tools for mapping possible maneuvers to expected
+    $P_C$ post-maneuver.
+    \begin{itemize}
+    \item Not very well documented in the public domain\ldots
+    \end{itemize}
+  \item Allows us to mitigate the risk to the primary from this particular
+    secondary.
+  \item What about all the other possible conjunctors?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Maneuver Validation}
+  \begin{itemize}
+  \item Space is big.
+  \item The lane we plan to swerve into is \emph{probably} open.
+  \item Approach: Plan the remediation in isolation, then pass the planned orbit back into the next round of conjunction screening.
+    \begin{itemize}
+    \item If no new HIEs crop up, we're good.
+    \item Else, try planning a different maneuver.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 
 %% Q&A and Further reading.
 \miniframesoff
 \section*{}
-\begin{frame}{References}[allowframebreaks]
-  \tiny
-% TODO
-%    \printbibliography
+\begin{frame}{References}
+  \AtNextBibliography{\tiny}
+  \nocite{*}
+  \printbibliography
 \end{frame}
 
 \begin{frame}{Self Link}
