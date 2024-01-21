@@ -136,6 +136,10 @@ sorting=ynt,
     \item Uncounted others (fortunately negligible)
     \end{itemize}
   \item Particularly relevant for higher-altitude orbits.
+  \item Additional bodies also accelerate Earth.
+    \begin{itemize}
+    \item Must subtract out ``shaky camera'' effect on our reference body.
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -194,16 +198,16 @@ sorting=ynt,
   Equatorial gravity increases. Polar gravity decreases.
 \end{frame}
 
-
 \begin{frame}{Perturbation: Indirect Oblation}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \alert{\ddot{R}_\text{IO}}\]
   \begin{itemize}
-  \item Earth is not an inertial reference frame
+  \item Earth is (still) not an inertial reference frame.
+  \item Point-mass effects already smoothed out in $\ddot{R}_\text{PM}$ term.
+  \item Non-sphericity effects can further perturb our reference frame.
     \begin{itemize}
-    \item Has its own orbit around Sol
-    \item Yanked around by Luna inside that orbit
+    \item Almost always negligible.
+    \item Earth-Luna interaction is measurable, however.
     \end{itemize}
-  \item ``Shaky Camera'' effect
   \end{itemize}
 \end{frame}
 
