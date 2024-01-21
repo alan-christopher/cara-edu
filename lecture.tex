@@ -16,6 +16,7 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usetikzlibrary{fit}
+\usetikzlibrary{math}
 
 %% For on-slide alerting of nodes
 \tikzstyle{alert} = [text=black, fill=blue!20, draw=black]
@@ -136,7 +137,6 @@
   \end{itemize}
 \end{frame}
 
-% TODO: add image (maybe whole frame)
 \begin{frame}{Perturbation: Non-Sphericity}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS} \]
   \begin{itemize}
@@ -147,12 +147,79 @@
     \end{itemize}
   \item Earth is neither
     \begin{itemize}
-    \item Structural rigidity
-    \item Centrifugal forces
-    \item Tidal forces
+    \item Tidal forces (order meters)
+    \item Centrifugal forces (order kilometers)
     \end{itemize}
   \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{Non-Sphericity: Oblation}
+  Gross exaggeration: cylindrical Earth
+  
+  \begin{center}
+    % \begin{tikzpicture}
+    %   \tikzmath{
+    %     \rP = 0.5;
+    %     \rPT = 0.7;
+    %     \rO = 1.5;
+    %     \rCG = 0.25;
+    %     \xCG = \rCG * cos 60;
+    %     \yCG = \rCG * sin 60;
+    %     \rDot = 0.015;
+    %   }
+    %   % satellite orbit
+    %   \draw[black, dashed] circle [x radius = \rO, y radius = \rO];
+    %   % satellite point mass
+    %   \filldraw[black, thick] (0, \rO) circle [x radius = \rDot, y radius = \rDot];
+      
+    %   % planet
+    %   \draw[black, thick, fill=gray] (15:\rP) arc (15:-255:\rP) -- (60:\rPT) -- (15:\rP);    
+    %   \filldraw[black, thick] (0, 0) circle [x radius = \rDot, y radius = \rDot];
+      
+    %   % motion vector
+    %   \draw[black, ->] (0,\rO) -- (1, \rO)
+    %   node[draw=none,fill=none,font=\scriptsize,midway,above] {$\dot{R}$};
+      
+    %   % center of gravity and force vector
+    %   \filldraw[blue, thick] (\xCG,\yCG) circle [x radius = \rDot, y radius = \rDot];
+    %   \draw[black, ->] (0,\rO) -- (\xCG, \yCG)
+    %   node[draw=none,fill=none,font=\scriptsize,midway,left] {$\ddot{R}$};
+    % \end{tikzpicture}
+    \begin{tikzpicture}
+      \tikzmath{
+        \h = 0.5;
+        \w = 5;
+        \rDot = 0.02;
+        \rSat = 0.1;
+        \r = 3;
+      }
+
+      \coordinate (P) at (\w / 2, \h /2 + \r);
+      \coordinate (E) at (\w / 2 + \r, \h / 2);
+
+      
+      \draw[black, thick, fill=gray] rectangle (\w,\h);
+
+      \filldraw[black, thick, fill=gray] (E) circle [x radius = \rSat, y radius = \rSat];
+      \filldraw[black, thick, fill=gray] (P) circle [x radius = \rSat, y radius = \rSat];
+      \filldraw[black, thick] (E) circle [x radius = \rDot, y radius = \rDot]; 
+      \filldraw[black, thick] (P) circle [x radius = \rDot, y radius = \rDot]; 
+
+      \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (C) at (\w / 2, \h / 2) {};
+      
+      \draw[black,thick,->] (E) -- (C);
+      \draw [decorate,decoration={brace,mirror,raise=8pt}]
+      (E) -- (\w, \h / 2) node[midway,yshift=10pt,above]{Lots of close mass};
+      
+      \draw[black,thick,->] (P) -- (C);
+      \draw [decorate,decoration={brace,amplitude=10pt,mirror,raise=5pt}]
+      (P) -- (\w / 2, \h) node[midway,xshift=-16pt,left]{All mass distant};
+    \end{tikzpicture}
+  \end{center}
+
+  Equatorial gravity increases. Polar gravity decreases.
+\end{frame}
+
 
 \begin{frame}{Perturbation: Indirect Oblation}
   \[ \ddot{R} = \ddot{R}_\text{2B} + \ddot{R}_\text{PM} + \ddot{R}_\text{NS}  + \ddot{R}_\text{IO}\]
@@ -296,19 +363,45 @@
     \end{itemize}
   \item Technically not a CARA responsibility
     \begin{itemize}
-    \item Screening computed for CARA by CSpOC
-    \item Uses a method called Computation of Miss Between Orbits (COMBO)
+    \item Screening computed for CARA by CSpOC using COMBO (Computation of Miss
+      Between Orbits).
+    \item Operates on a ``flying-ellipsoid'' volumetric screening paradigm.
     \end{itemize}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{COMBO in Pictures}
-  % TODO: create a flying ellipsoid image-set.
+\begin{frame}[fragile]{Volumetric Screening}
+  \begin{center}
+    \begin{tikzpicture}
+      \tikzmath{
+        \rDot = 0.04;
+      }
+
+      
+      \coordinate (P) at (30:4 and 5);
+      \draw[black, thick, dashed] (0:4 and 5) arc (0:90:4 and 5);
+      \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (PN) at (P) {};
+      
+      \coordinate (S) at (60:6 and 4);
+      \draw[black, thick, dashed] (0:6 and 4) arc (0:90:6 and 4);
+      \node[circle,fill=red,inner sep=1pt,minimum size=\rDot] (SN) at (S) {};
+
+      \draw[blue, rotate=30, fill=blue, fill opacity=.30] (P) circle (0.5 and 2);
+      \draw[blue, rotate=30, shift=(P)] (0, 2) arc (90:270:0.25 and 2);
+      \draw[blue, dashed, rotate=30, shift=(P)] (0, -2) arc (-90:90:0.25 and 2);
+
+      \node (PLabel) at (1,2) {Primary};
+      \node (SLabel) at (4,5) {Secondary};
+
+      \draw[black, ->] (PLabel) -- (PN);
+      \draw[black, ->] (SLabel) -- (SN);
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
-\begin{frame}{COMBO in Pseudocode}
+\begin{frame}{Volumetric Screening}
   \begin{algorithmic}
-    \Procedure{COMBO}{}
+    \Procedure{ScreenConjunctions}{}
     \For{$p, s, t \in \textit{Primaries} \times \textit{Secondaries} \times \textit{Time Slices}$}
       \State $V \gets \text{ellipse around }p(t)$
       \If{$s(t).\text{pos} \notin V$}
@@ -373,6 +466,8 @@
   \end{itemize}
 \end{frame}
 
+% TODO: roll this into motivation section
+% TODO: Add a slide+subsection for MTS
 \begin{frame}{Severity Estimation}
   \begin{itemize}
   \item For the domain:
@@ -407,7 +502,7 @@
 
 \begin{frame}{2D $P_C$: Assumptions}
   \begin{enumerate}
-  \item State position vectors $R_1 \sim \mathcal{N}(\bar{R_1}, \Sigma_1), R_2 \sim \mathcal{N}(\bar{R_2}, \Sigma_2)$
+  \item State position vectors $R_1 \sim \mathcal{N}(\bar{R_1}, C_1), R_2 \sim \mathcal{N}(\bar{R_2}, C_2)$
   \item $R_1 \perp R_2$
   \item Velocity uncertainty is negligible
   \item Position uncertainty is stable throughout the encounter
@@ -420,32 +515,32 @@
   Core idea: Don't think about two objects, think about
   the distance separating them. More precisely, let
   
-  \[ R_\Delta := R_2 - R_1 \]
+  \[ R_\text{miss} := R_2 - R_1 \]
 
   We wish to integrate
 
-  \[ \int f_\Delta(R) \mathbb{I}(\text{collision} | R) dR \]
+  \[ \int f_\text{miss}(R) \mathbb{I}(\text{collision} | R) dR \]
 \end{frame}
 
 \begin{frame}{2D $P_C$}
 
-  \[ \int \alert{f_\Delta(R)} \mathbb{I}(\text{collision} | R) dR \]
+  \[ \int \alert{f_\text{miss}(R)} \mathbb{I}(\text{collision} | R) dR \]
 
   Recall: $R_1 \perp R_2$, both Gaussian. So
 
-  \[ R_\Delta \sim \mathcal{N}(\bar{R_2} - \bar{R_1}, \Sigma_2 - \Sigma_1) \]
+  \[ R_\text{miss} \sim \mathcal{N}(\bar{R_2} - \bar{R_1}, C_2 - C_1) \]
 
-  $f_\Delta$ is just $\phi$!
+  $f_\text{miss}$ is just $\phi$!
 \end{frame}
 
 
 \begin{frame}{2D $P_C$}
 
-  \[ \int f_\Delta(R) \alert{\mathbb{I}(\text{collision} | R)} dR \]
+  \[ \int f_\text{miss}(R) \alert{\mathbb{I}(\text{collision} | R)} dR \]
 
   Linear motion, spherical objects. Collision iff $\exists t \in \mathbb{R}$ s.t.
 
-  \[ ||R_\Delta + v_\Delta \cdot t|| < r \]
+  \[ ||R_\text{miss} + v_\text{miss} \cdot t|| < r \]
 
   That's a cylinder!
 
@@ -459,10 +554,6 @@
 
   % TODO: insert image here
 
-
-\end{frame}
-
-\begin{frame}{2D $P_C$}
   A little final massaging and we arrive at a numerical-quadrature-friendly
   integral.
   
@@ -490,7 +581,7 @@
 
 
 \begin{frame}{3D $P_C$}
-  \[ P(\text{conjunctors touching at }t) = P(||R_\Delta(t)|| = r) \]
+  \[ P(\text{conjunctors touching at }t) = P(||R_\text{miss}(t)|| = r) \]
 
   \begin{itemize}
   \item The integrand is a surface integral over a sphere!
@@ -498,7 +589,7 @@
     \item Total integration dimension: 3
     \item Curse of dimensionality remains weak
     \end{itemize}
-  \item Can we compute and integrate $R_\Delta(t)$?
+  \item Can we compute and integrate $R_\text{miss}(t)$?
     \begin{itemize}
     \item Yes, with two-body equations of motion\ldots but the math is kind of
       involved.
@@ -522,7 +613,7 @@
   \begin{algorithmic}
     \Procedure{FromEpochMC}{\textit{primOD}, \textit{secOD}, \textit{trials}}
     \State $\textit{hits} \gets 0$
-    \For{$t \in [0,\ldots,\textit{trials})$}
+    \For{$i \in [0,\ldots,\textit{trials})$}
       \State $p \gets \text{draw from } \textit{primOD}$ 
       \State $s \gets \text{draw from } \textit{secOD}$
       \If{$p.\text{propagate()} \text{ collides with } s.\text{propagate()}$}
@@ -555,7 +646,7 @@
   \begin{algorithmic}
     \Procedure{FromTCAMC}{\textit{primTCA}, \textit{secTCA}, \textit{trials}}
     \State $\textit{hits} \gets 0$
-    \For{$t \in [0,\ldots,\textit{trials})$}
+    \For{$i \in [0,\ldots,\textit{trials})$}
       \State $p \gets \text{draw from } \textit{primTCA}$ 
       \State $s \gets \text{draw from } \textit{secTCA}$
       \If{$p.\text{propForward()} \text{ collides with } s.\text{propForward()}$}
@@ -590,7 +681,6 @@
   \end{itemize}
 \end{frame}
 
-% TODO: describe from-epoch and from-TCA monte carlo methods.
 
 %% Q&A and Further reading.
 \miniframesoff
