@@ -2,6 +2,7 @@
 \documentclass[pdf]{beamer}
 \mode<presentation>{\usetheme{Dresden}}
 \usepackage{lmodern}
+\usepackage[normalem]{ulem}
 \usepackage{amsmath,textcomp,amssymb,geometry,graphicx,listings,array,color,amsthm}
 
 \usepackage[noend]{algpseudocode}
@@ -447,7 +448,7 @@ sorting=ynt,
 \subsection{2D $P_C$}
 \begin{frame}{Naive $P_C$}
 
-  \[ \int\int f(S_1,S_2) \mathbb{I}(\text{collision} | S_1,S_2) dS_1 dS_2 \]
+  \[ \int\int \rho(S_1,S_2) \mathbb{I}(\text{collision} | S_1,S_2) dS_1 dS_2 \]
 
   \begin{itemize}
   \item That's a 12-dimensional integral.
@@ -475,18 +476,18 @@ sorting=ynt,
 
   We wish to integrate
 
-  \[ \int f_\text{miss}(R) \mathbb{I}(\text{collision} | R) dR \]
+  \[ \int \rho_\text{miss}(R) \mathbb{I}(\text{collision} | R) dR \]
 \end{frame}
 
 \begin{frame}{2D $P_C$}
 
-  \[ \int \alert{f_\text{miss}(R)} \mathbb{I}(\text{collision} | R) dR \]
+  \[ \int \alert{\rho_\text{miss}(R)} \mathbb{I}(\text{collision} | R) dR \]
 
   Recall: $R_1 \perp R_2$, both Gaussian. So
 
   \[ R_\text{miss} \sim \mathcal{N}(\bar{R_2} - \bar{R_1}, C_2 - C_1) \]
 
-  $f_\text{miss}$ is just $\phi$!
+  $\rho_\text{miss}$ is just $\phi$!
 \end{frame}
 
 
@@ -592,31 +593,63 @@ sorting=ynt,
 \end{frame}
 
 \begin{frame}{3D $P_C$}
-  What happens if we trace our miss vector through the encounter?
+  What happens if we try to count collisions throughout the encounter?
 
-  \[ \int P(\text{conjunctors touching at }t) dt\]
+  \[ \bar{N}_C = \int_{t_0}^{t_\text{end}} E(\dot{N}_C) dt\]
 
-  That's actually $N_C$, the expected number of collisions, but close enough.
+  That's not actually $P_C$, but for single-encounter conjunctions, the
+  distinction is academic.
 \end{frame}
 
 
 \begin{frame}{3D $P_C$}
-  \[ P(\text{conjunctors touching at }t) = P(||R_\text{miss}(t)|| = r) \]
+  \[ E(\dot{N}_C) = \int \int \rho(S_1, S_2) \alert{\dot{N}_C(S_1, S_2, t)} dS1dS2\]
+
+  To find $\dot{N}_C(S_1, S_2, t)$, let's start with $N_\text{overlap}$. It's a step function on the
+  ball around our miss vector, propagated to time $t$!
+
+  \[ N_\text{overlap} = \mathbb{I}(||R_\text{miss}|| < r) = \begin{cases} 
+      0 & r^2 - R^T R \leq 0 \\
+      0 & r^2 - R^T R > 0 
+    \end{cases}
+  \]
+
+  Chain rule it out to get
+
+  \[ \dot{N}_\text{overlap} = \delta(r^2 - R^T R)(-2R^T \dot{R})\]
+\end{frame}
+
+\begin{frame}{3D $P_C$}
+
+  \[ E(\dot{N}_C) = \int \int \rho(S_1, S_2) \alert{\dot{N}_C(S_1, S_2, t)} dS1dS2\]
+
+  $\dot{N}_\text{overlap}$ is not $\dot{N_\text{C}}$ -- it adds ingress
+  (yay!) and subtracts egress (boo!). Thresholding at zero solves our problem
+
+  \[ \dot{N}_C = max(0, \dot{N}_\text{overlap}) = \delta(r^2 - R^T R)[-2R^T \dot{R})]_{+}\]
+  
+\end{frame}
+
+\begin{frame}{3D $P_C$}
+
+  \[ E(\dot{N}_C) = \alert{\int \int \rho(S_1, S_2)} \dot{N}_C(S_1, S_2, t) \alert{dS1dS2}\]
 
   \begin{itemize}
-  \item The integrand is a surface integral over a sphere!
+  \item Hello \sout{darkness} 12-D integral, my old friend
+  \item With an assumption of elliptical movement, this \emph{can} actually be
+    reduced to a manageable dimension.
     \begin{itemize}
-    \item Total integration dimension: 3
-    \item Curse of dimensionality remains weak
+    \item Requires a heroic amount of massaging algebra and calculus.
+    \item Interested parties are referred to the full pub.
     \end{itemize}
-  \item Can we compute and integrate $R_\text{miss}(t)$?
+  \item Final integral dimensions post-massage:
     \begin{itemize}
-    \item Yes, with two-body equations of motion\ldots but the math is kind of
-      involved.
-    \item Please read the full pub if interested.
+    \item  1-D time integral over the encounter interval
+    \item  2-D surface integral over the miss ball
     \end{itemize}
   \end{itemize}
 \end{frame}
+
 
 
 \subsection{Monte Carlo}
