@@ -269,7 +269,7 @@ sorting=ynt,
   \begin{itemize}
   \item Low-to-medium fidelity diff-eqs can be solved analytically
     \begin{itemize}
-      \item E.g. Brouwer models, SGP4/SDP4
+    \item E.g. Brouwer models, SGP4/SDP4
     \end{itemize}
   \item High-fidelity generally resort to numerical integration
     \begin{itemize}
@@ -280,6 +280,7 @@ sorting=ynt,
     \item By kilometers
     \item Within a few orbital periods (i.e. hours)
     \end{itemize}
+  \item None of the models correspond to beautiful, eternal shapes.
   \end{itemize}
 \end{frame}
 
@@ -300,35 +301,38 @@ sorting=ynt,
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Domain Safety I}
+\begin{frame}{Domain Safety}
 
   \begin{itemize}
-  \item Orbit contention is self-reinforcing
-    \begin{itemize}
-    \item More objects means more conjunctions
-    \item More conjunctions means more collisions
-    \item More collisions means more objects
-    \end{itemize}
-  \item Critical density $\rightarrow$ runaway, sustained fragmentation
-    \begin{itemize}
-    \item Kessler syndrome
-    \end{itemize}
-  \item Sub-critical density increases still increase hazard to ecosystem
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Domain Safety II}
-  \begin{itemize}
-  \item Vested public interest in controlling flux
-  \item Must avoid collisions, especially between large objects
+  \item Any collision increases hazard to ecosystem
     \begin{itemize}
     \item Debris potential strongly linked to object size
     \item Largest objects are best tracked
     \item Objects follow a power-law distribution: many, many small pieces,
       comparatively few large
     \end{itemize}
+    \pause
+
+  \item Orbit contention is self-reinforcing
+    \begin{itemize}
+    \item More objects means more conjunctions
+    \item More conjunctions means more collisions
+    \item More collisions means more objects
+    \end{itemize}
+    \pause
+  \item Critical density $\rightarrow$ runaway, sustained fragmentation
+    \begin{itemize}
+    \item Kessler syndrome
+    \end{itemize}
   \end{itemize}
 \end{frame}
+
+% \begin{frame}{Domain Safety II}
+%   \begin{itemize}
+%   \item Vested public interest in controlling flux
+%   \item Must avoid collisions, especially between large objects
+%   \end{itemize}
+% \end{frame}
 
 \section{Conjunction Identification}
 \subsection{Volumetric Screening}
@@ -426,7 +430,7 @@ sorting=ynt,
   \end{algorithmic}
 \end{frame}
 
-\section{Conjunction Analysis}
+\section{HIE Identification}
 \subsection{Risk Measures}
 
 \begin{frame}{Standoff Distance}
@@ -522,7 +526,7 @@ sorting=ynt,
 
 \begin{frame}{2D $P_C$}
 
-  \[ \int f_\text{miss}(R) \alert{\mathbb{I}(\text{collision} | R)} dR \]
+  \[ \int \rho_\text{miss}(R) \alert{\mathbb{I}(\text{collision} | R)} dR \]
 
   Linear motion, spherical objects. Collision iff $\exists t \in \mathbb{R}$ s.t.
 
@@ -637,11 +641,7 @@ sorting=ynt,
   To find $\dot{N}_C(S_1, S_2, t)$, let's start with $N_\text{overlap}$. It's a step function on the
   ball around our miss vector, propagated to time $t$!
 
-  \[ N_\text{overlap} = \mathbb{I}(||R_\text{miss}|| < r) = \begin{cases} 
-      0 & r^2 - R^T R \leq 0 \\
-      0 & r^2 - R^T R > 0 
-    \end{cases}
-  \]
+  \[ N_\text{overlap} = \mathbb{I}(||R_\text{miss}|| < r) = H(r^2 - R^T R) \]
 
   Chain rule it out to get
 
@@ -655,7 +655,7 @@ sorting=ynt,
   $\dot{N}_\text{overlap}$ is not $\dot{N_\text{C}}$ -- it adds ingress
   (yay!) and subtracts egress (boo!). Thresholding at zero solves our problem
 
-  \[ \dot{N}_C = max(0, \dot{N}_\text{overlap}) = \delta(r^2 - R^T R)[-2R^T \dot{R})]_{+}\]
+  \[ \dot{N}_C = max(0, \dot{N}_\text{overlap}) = \delta(r^2 - R^T R)[-2R^T \dot{R}]_{+}\]
   
 \end{frame}
 
