@@ -356,24 +356,53 @@ sorting=ynt,
         \rDot = 0.04;
       }
 
-      
-      \coordinate (P) at (30:4 and 5);
+      \coordinate (P1) at (50:4 and 5);
+      \coordinate (P2) at (40:4 and 5);
+      \coordinate (P3) at (30:4 and 5);
       \draw[black, thick, dashed] (0:4 and 5) arc (0:90:4 and 5);
-      \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (PN) at (P) {};
       
-      \coordinate (S) at (60:6 and 4);
+      \coordinate (S1) at (80:6 and 4);
+      \coordinate (S2) at (70:6 and 4);
+      \coordinate (S3) at (60:6 and 4);
       \draw[black, thick, dashed] (0:6 and 4) arc (0:90:6 and 4);
-      \node[circle,fill=red,inner sep=1pt,minimum size=\rDot] (SN) at (S) {};
-
-      \draw[blue, rotate=30, fill=blue, fill opacity=.30] (P) circle (0.5 and 2);
-      \draw[blue, rotate=30, shift=(P)] (0, 2) arc (90:270:0.25 and 2);
-      \draw[blue, dashed, rotate=30, shift=(P)] (0, -2) arc (-90:90:0.25 and 2);
 
       \node (PLabel) at (1,2) {Primary};
       \node (SLabel) at (4,5) {Secondary};
 
-      \draw[black, ->] (PLabel) -- (PN);
-      \draw[black, ->] (SLabel) -- (SN);
+      % I'm fairly certain this can be cleaned up with a for-loop, but my
+      % tikz-fu is still kind of weak and copy-paste is easy.
+      \only<1>{
+        \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (P1N) at (P1) {};
+        \node[circle,fill=red,inner sep=1pt,minimum size=\rDot] (S1N) at (S1) {};
+        \draw[black, ->] (PLabel) -- (P1N);
+        \draw[black, ->] (SLabel) -- (S1N);
+
+        \draw[blue, rotate=50, fill=blue, fill opacity=.30] (P1) circle (0.5 and 2);
+        \draw[blue, rotate=50, shift=(P1)] (0, 2) arc (90:270:0.25 and 2);
+        \draw[blue, dashed, rotate=50, shift=(P1)] (0, -2) arc (-90:90:0.25 and 2);
+      }
+      \only<2>{
+        \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (P2N) at (P2) {};
+        \node[circle,fill=red,inner sep=1pt,minimum size=\rDot] (S2N) at (S2) {};
+        \draw[black, ->] (PLabel) -- (P2N);
+        \draw[black, ->] (SLabel) -- (S2N);
+
+        \draw[blue, rotate=40, fill=blue, fill opacity=.30] (P2) circle (0.5 and 2);
+        \draw[blue, rotate=40, shift=(P2)] (0, 2) arc (90:270:0.25 and 2);
+        \draw[blue, dashed, rotate=40, shift=(P2)] (0, -2) arc (-90:90:0.25 and 2);
+      }
+      \only<3>{
+        \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (P3N) at (P3) {};
+        \node[circle,fill=red,inner sep=1pt,minimum size=\rDot] (S3N) at (S3) {};
+        \draw[black, ->] (PLabel) -- (P3N);
+        \draw[black, ->] (SLabel) -- (S3N);
+
+        \draw[blue, rotate=30, fill=blue, fill opacity=.30] (P3) circle (0.5 and 2);
+        \draw[blue, rotate=30, shift=(P3)] (0, 2) arc (90:270:0.25 and 2);
+        \draw[blue, dashed, rotate=30, shift=(P3)] (0, -2) arc (-90:90:0.25 and 2);
+      }
+
+      
     \end{tikzpicture}
   \end{center}
 \end{frame}
