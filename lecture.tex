@@ -166,37 +166,42 @@ sorting=ynt,
   \begin{center}
     \begin{tikzpicture}
       \tikzmath{
-        \h = 0.5;
-        \w = 5;
+        \h = 0.3;
+        \w = 6;
         \rDot = 0.02;
         \rSat = 0.1;
-        \r = 3;
+        \r = 0.8;
       }
 
-      \coordinate (P) at (\w / 2, \h /2 + \r);
-      \coordinate (E) at (\w / 2 + \r, \h / 2);
-
+      \coordinate (C) at (\w / 2, \h / 2);
+      \coordinate (P) at (\w / 2, \h /2 + 1.5*\r);
       
-      \draw[black, thick, fill=gray] rectangle (\w,\h);
+      \draw[blue, thick, fill=blue, fill opacity=0.30] rectangle (\w,\h);
+      \draw[blue, thick, dashed] (C) circle [x radius = \r, y radius = \r];
 
-      \filldraw[black, thick, fill=gray] (E) circle [x radius = \rSat, y radius = \rSat];
-      \filldraw[black, thick, fill=gray] (P) circle [x radius = \rSat, y radius = \rSat];
-      \filldraw[black, thick] (E) circle [x radius = \rDot, y radius = \rDot]; 
-      \filldraw[black, thick] (P) circle [x radius = \rDot, y radius = \rDot]; 
 
-      \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (C) at (\w / 2, \h / 2) {};
-      
-      \draw[black,thick,->] (E) -- (C);
-      \draw [decorate,decoration={brace,mirror,raise=8pt}]
-      (E) -- (\w, \h / 2) node[midway,yshift=10pt,above]{Lots of close mass};
+      \filldraw[blue, thick, fill=blue, fill opacity=0.30] (P) circle [x radius = \rSat, y radius = \rSat];
+      \filldraw[blue, thick] (P) circle [x radius = \rDot, y radius = \rDot]; 
+
+      \node[circle,fill=blue,inner sep=1pt,minimum size=\rDot] (CN) at (C) {};
       
       \draw[black,thick,->] (P) -- (C);
-      \draw [decorate,decoration={brace,amplitude=10pt,mirror,raise=5pt}]
-      (P) -- (\w / 2, \h) node[midway,xshift=-16pt,left]{All mass distant};
+      \draw [decorate,decoration={brace,amplitude=4pt,mirror,raise=2pt}]
+      (\w / 2 - \r, \h/2 + \r) -- (\w / 2 - \r, \h) node[midway,xshift=-8pt,left]{Close mass pushed away};
+
+
+      
+      \draw[black,thick, dashed, ->] (P) -- (\w /2 + \r, \h /2);
+      \draw[black,thick, dashed, ->] (P) -- (\w, \h /2);
+
+      
+      \draw [decorate,decoration={brace,amplitude=12pt,mirror,raise=3pt}]
+      (\w / 2 + \r, 0) -- (\w, 0) node[midway,yshift=-16pt,below]{Pull angle widened};
+
     \end{tikzpicture}
   \end{center}
 
-  Equatorial gravity exceeds Polar gravity.
+  Polar gravity $\downarrow\downarrow\downarrow$.
 \end{frame}
 
 \begin{frame}{Perturbation: Indirect Oblation}
